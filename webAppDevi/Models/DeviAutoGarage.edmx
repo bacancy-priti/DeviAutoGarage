@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DeviAutoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BikeBrand">
+          <Key>
+            <PropertyRef Name="BikeBrandId" />
+          </Key>
+          <Property Name="BikeBrandId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BikeBrandName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="BikePhotos">
+          <Key>
+            <PropertyRef Name="BikePhotoId" />
+          </Key>
+          <Property Name="BikePhotoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BikeBrandId" Type="int" Nullable="false" />
+          <Property Name="BikePhotoName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserDetails">
+          <Key>
+            <PropertyRef Name="UserDetailsId" />
+          </Key>
+          <Property Name="UserDetailsId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="32" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="32" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="128" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="128" />
+          <Property Name="Landmark" Type="nvarchar" MaxLength="32" />
+          <Property Name="ZipCode" Type="char" MaxLength="10" />
+          <Property Name="ContactNumber" Type="nvarchar" MaxLength="16" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="32" />
+          <Property Name="EmailId" Type="nvarchar" MaxLength="64" />
+          <Property Name="Password" Type="nvarchar" MaxLength="64" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+        </EntityType>
+        <Association Name="FK_BikePhotos_BikeBrand">
+          <End Role="BikeBrand" Type="Self.BikeBrand" Multiplicity="1" />
+          <End Role="BikePhotos" Type="Self.BikePhotos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BikeBrand">
+              <PropertyRef Name="BikeBrandId" />
+            </Principal>
+            <Dependent Role="BikePhotos">
+              <PropertyRef Name="BikeBrandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetails_UserDetails">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DeviAutoModelStoreContainer">
+          <EntitySet Name="BikeBrand" EntityType="Self.BikeBrand" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BikePhotos" EntityType="Self.BikePhotos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BikePhotos_BikeBrand" Association="Self.FK_BikePhotos_BikeBrand">
+            <End Role="BikeBrand" EntitySet="BikeBrand" />
+            <End Role="BikePhotos" EntitySet="BikePhotos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_UserDetails" Association="Self.FK_UserDetails_UserDetails">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DeviAutoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BikeBrand">
+          <Key>
+            <PropertyRef Name="BikeBrandId" />
+          </Key>
+          <Property Name="BikeBrandId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BikeBrandName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="BikePhotos" Relationship="Self.FK_BikePhotos_BikeBrand" FromRole="BikeBrand" ToRole="BikePhotos" />
+        </EntityType>
+        <EntityType Name="BikePhoto">
+          <Key>
+            <PropertyRef Name="BikePhotoId" />
+          </Key>
+          <Property Name="BikePhotoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BikeBrandId" Type="Int32" Nullable="false" />
+          <Property Name="BikePhotoName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="BikeBrand" Relationship="Self.FK_BikePhotos_BikeBrand" FromRole="BikePhotos" ToRole="BikeBrand" />
+        </EntityType>
+        <Association Name="FK_BikePhotos_BikeBrand">
+          <End Role="BikeBrand" Type="Self.BikeBrand" Multiplicity="1" />
+          <End Role="BikePhotos" Type="Self.BikePhoto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BikeBrand">
+              <PropertyRef Name="BikeBrandId" />
+            </Principal>
+            <Dependent Role="BikePhotos">
+              <PropertyRef Name="BikeBrandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DeviAutoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BikeBrands" EntityType="Self.BikeBrand" />
+          <EntitySet Name="BikePhotos" EntityType="Self.BikePhoto" />
+          <AssociationSet Name="FK_BikePhotos_BikeBrand" Association="Self.FK_BikePhotos_BikeBrand">
+            <End Role="BikeBrand" EntitySet="BikeBrands" />
+            <End Role="BikePhotos" EntitySet="BikePhotos" />
+          </AssociationSet>
+          <EntitySet Name="UserDetails" EntityType="DeviAutoModel.UserDetail" />
+          <EntitySet Name="Users" EntityType="DeviAutoModel.User" />
+          <AssociationSet Name="FK_UserDetails_UserDetails" Association="DeviAutoModel.FK_UserDetails_UserDetails">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserDetail" EntitySet="UserDetails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="UserDetail">
+          <Key>
+            <PropertyRef Name="UserDetailsId" />
+          </Key>
+          <Property Name="UserDetailsId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="FirstName" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Address1" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Landmark" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="ContactNumber" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="DeviAutoModel.FK_UserDetails_UserDetails" FromRole="UserDetail" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="EmailId" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <NavigationProperty Name="UserDetails" Relationship="DeviAutoModel.FK_UserDetails_UserDetails" FromRole="User" ToRole="UserDetail" />
+        </EntityType>
+        <Association Name="FK_UserDetails_UserDetails">
+          <End Type="DeviAutoModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="DeviAutoModel.UserDetail" Role="UserDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserDetail">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DeviAutoModelStoreContainer" CdmEntityContainer="DeviAutoEntities">
+          <EntitySetMapping Name="BikeBrands">
+            <EntityTypeMapping TypeName="DeviAutoModel.BikeBrand">
+              <MappingFragment StoreEntitySet="BikeBrand">
+                <ScalarProperty Name="BikeBrandId" ColumnName="BikeBrandId" />
+                <ScalarProperty Name="BikeBrandName" ColumnName="BikeBrandName" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BikePhotos">
+            <EntityTypeMapping TypeName="DeviAutoModel.BikePhoto">
+              <MappingFragment StoreEntitySet="BikePhotos">
+                <ScalarProperty Name="BikePhotoId" ColumnName="BikePhotoId" />
+                <ScalarProperty Name="BikeBrandId" ColumnName="BikeBrandId" />
+                <ScalarProperty Name="BikePhotoName" ColumnName="BikePhotoName" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDetails">
+            <EntityTypeMapping TypeName="DeviAutoModel.UserDetail">
+              <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserDetailsId" ColumnName="UserDetailsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DeviAutoModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,56 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- Bootstrap Core CSS -->
+    <link href="../../Content/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+    <!-- Custom CSS -->
+    <link href="../../Content/css/custom.css" rel="stylesheet" />
+    <link href="../../Content/css/style.css" rel='stylesheet' type='text/css' />
+    <!-- Graph CSS -->
+    <link href="../../Content/css/font-awesome.css" rel="stylesheet">
+    <!-- jQuery -->
+    <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'>
+    <!-- lined-icons -->
+    <link rel="stylesheet" href="../../Content/css/icon-font.min.css" type='text/css' />
+    <!-- //lined-icons -->
+    <script src="../../Scripts/jquery-1.8.3.js"></script>
+    <script src="../../Scripts/jquery.validate.js"></script>
+    <script src="../../Scripts/jquery.validate.unobtrusive.min.js"></script>
+</head>
+<body>
+    <div class="error_page">
+        <!--/login-top-->
+        <div class="error-top">
+            @RenderBody()
+        </div>
+        <!--//login-top-->
+    </div>
+    <!--//login-->
+    <!--footer section start-->
+    <div class="footer">
+        <div class="error-btn">
+            <a class="read fourth" href="#">Return to Home</a>
+        </div>
+        <p>&copy @DateTime.Now.Year Devi Auto Garage</p>
+    </div>
+    <!--footer section end-->
+    <!--/404-->
+    <!--js -->
+    @section Scripts
+    {
+        @Scripts.Render("../../Scripts/jquery.nicescroll.js")
+        @Scripts.Render("../../Scripts/scripts.js")
+        @Scripts.Render("../../Scripts/bootstrap.min.js")
+        @*<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/additional-methods.min.js"></script>*@
+    }
+</body>
+</html>

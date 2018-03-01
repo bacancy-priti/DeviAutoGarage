@@ -1,0 +1,50 @@
+﻿@model IEnumerable<webAppDevi.Models.BikeBrand>
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/_Shared/_Layout.cshtml";
+}
+@{
+    var grid = new WebGrid(source: Model, canPage: true, rowsPerPage: 3);
+    grid.Pager(WebGridPagerModes.All);
+}
+<h2 class="inner-tittle">Bike Brand Details </h2>
+<div id="gridContent" class="graph">
+    <div class="tables">
+        @if (Model != null)
+        {
+            @grid.GetHtml(tableStyle: "table table-bordered",
+            headerStyle: "webgrid-header",
+            footerStyle: "webgrid-footer",
+            alternatingRowStyle: "webgrid-alternating-row",
+            selectedRowStyle: "webgrid-selected-row",
+            rowStyle: "webgrid-row-style",
+            columns: grid.Columns(
+                grid.Column("BikeBrandId", header: "#", format: (item) => item.GetSelectLink(item.BikeBrandId.ToString())),
+                grid.Column(columnName: "BikeBrandName", header: "Brand Name"),
+                grid.Column(columnName: "Action", format:
+                @<text>
+                    <a title="Edit" href="@Url.Action("AddEdit", "Brand", new { id = item.BikeBrandId })">
+                        <i class="fa fa-edit" aria-hidden="true"></i>
+                    </a>
+                    <a title="Delete" id="aDelete" onclick="Delete(@item.BikeBrandId)">
+                        <i class="fa fa-remove" aria-hidden="true"></i>
+                    </a>
+                </text>
+
+                           )
+                                          ))
+        }
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript">
+        function Delete(id) {
+            var url = window.location.origin + "/Brand/Delete?id=" + id;
+            if (confirm("Are you sure?")) {
+                // your deletion code
+                window.location.href = url;
+            }
+            return false;
+        }
+    </script>
+}

@@ -1,0 +1,47 @@
+﻿@model webAppDevi.Models.BikeBrand
+@{
+    ViewBag.Title = "AddEdit";
+    Layout = "~/Views/_Shared/_Layout.cshtml";
+}
+@{
+    if (@ViewBag.SuccessMessage != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @ViewBag.SuccessMessage
+        </div>
+    }
+    if (@ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+}
+<div class="forms-main">
+    <h2 class="inner-tittle">Bikes </h2>
+    <div class="graph-form">
+        <div class="form-body">
+            @using (Html.BeginForm("AddEdit", "Brand", FormMethod.Post))
+            {
+                if (Model != null)
+                {
+                    @Html.HiddenFor(c => c.BikeBrandId)
+                }
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Brand Name</label>
+                    @Html.TextBoxFor(c => c.BikeBrandName,
+                  new
+                  {
+                      @id = "txtBikeBrandName",
+                      name = "txtBikeBrandName",
+                      @class = "form-control",
+                      placeholder = "Enter Bike Brand Name",
+                      @data_val = "true",
+                      @data_val_required = ""
+                  })
+                </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+            }
+        </div>
+    </div>
+</div>

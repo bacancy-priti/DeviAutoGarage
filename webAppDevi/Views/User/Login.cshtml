@@ -1,0 +1,57 @@
+﻿@model webAppDevi.Models.User
+@{
+    Layout = "~/Views/_Shared/_LayoutLogin.cshtml";
+}
+
+<h2 class="inner-tittle page">Devi Auto Garage</h2>
+<div class="login">
+    <h3 class="inner-tittle t-inner">Login</h3>
+    @{
+        if (@ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.ErrorMessage
+            </div>
+        }
+    }
+    @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @id = "formLogin" }))
+    {
+        @Html.TextBoxFor(c => c.UserName, new
+           {
+               @id = "UserName",
+               @class = "valid",
+               name = "UserName",
+               placeholder = "Enter User Name or email id",
+               @data_val = "true",
+               @data_val_required = ""
+           })
+        @Html.PasswordFor(c => c.Password, new
+           {
+               @id = "Password",
+               @class = "valid",
+               name = "Password",
+               placeholder = "********",
+               @data_val = "true",
+               @data_val_required = ""
+           })
+
+        <div class="submit"><input type="submit" value="Login"></div>
+        @*<input type="text" class="text" value="E-mail address" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'E-mail address';}">
+            <input type="password" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
+            <div class="submit"><input type="submit" onclick="myFunction()" value="Login"></div>*@
+        <div class="clearfix"></div>
+
+        <div class="new">
+            <p><label class="checkbox11"><input type="checkbox" name="checkbox"><i> </i>Forgot Password ?</label></p>
+            <div class="clearfix"></div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).load(function () {
+        if ('@ViewBag.ErrorMessage' != null || '@ViewBag.ErrorMessage' != '') {
+            $('.error-top').css('margin', '7em auto');
+        }
+    });
+</script>

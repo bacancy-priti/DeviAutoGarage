@@ -1,0 +1,173 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Devi Auto Garage :: Admin Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <script type="application/x-javascript">
+        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+    </script>
+    <link href="../../Content/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../Content/css/icon-font.min.css" type='text/css' />    
+    @Styles.Render("~/bundles/css")
+    @Scripts.Render("~/bundles/jquery/js")
+    @RenderSection("scripts", false) 
+</head>
+<body>
+    <div id="divAuto" class="page-container">
+        <!--/content-inner-->
+        <div class="left-content">
+            <div class="inner-content">
+                <!-- header-starts -->
+                <div class="header-section">
+                    <!--menu-right-->
+                    <div class="top_menu">
+                        <!--/profile_details-->
+                        <div class="profile_details_left">
+                            <ul class="nofitications-dropdown">
+                                <li class="dropdown note dra-down">
+                                    <script type="text/javascript">
+                                        function DropDown(el) {
+                                            this.dd = el;
+                                            this.placeholder = this.dd.children('span');
+                                            this.opts = this.dd.find('ul.dropdown > li');
+                                            this.val = '';
+                                            this.index = -1;
+                                            this.initEvents();
+                                        }
+                                        DropDown.prototype = {
+                                            initEvents: function () {
+                                                var obj = this;
+
+                                                obj.dd.on('click', function (event) {
+                                                    $(this).toggleClass('active');
+                                                    return false;
+                                                });
+
+                                                obj.opts.on('click', function () {
+                                                    var opt = $(this);
+                                                    obj.val = opt.text();
+                                                    obj.index = opt.index();
+                                                    obj.placeholder.text(obj.val);
+                                                });
+                                            },
+                                            getValue: function () {
+                                                return this.val;
+                                            },
+                                            getIndex: function () {
+                                                return this.index;
+                                            }
+                                        }
+
+                                        $(function () {
+                                            var dd = new DropDown($('#dd'));
+                                            $(document).click(function () {
+                                                // all dropdowns
+                                                $('.wrapper-dropdown-3').removeClass('active');
+                                            });
+                                        });
+                                    </script>
+                                </li>
+                                <div class="clearfix"></div>
+                                <li class="dropdown note">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    </a>
+                                </li>
+                                <div class="clearfix"></div>
+                            </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                        <!--//profile_details-->
+                    </div>
+                    <!--//menu-right-->
+                    <div class="clearfix"></div>
+                </div>
+                <!-- //header-ends -->
+                <div class="outter-wp">
+                    <!--/candile-->
+                    <div class="candile">
+                        <div class="candile-inner">
+                            <div id="center">
+                                <div id="fig">
+                                    @RenderBody()
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/candile-->
+                </div>
+               
+                <!--footer section start-->
+                <footer>
+                    <p>&copy @DateTime.Now.Year Devi Auto Garage </p>
+                </footer>
+                <!--footer section end-->
+            </div>
+        </div>
+        <!--//content-inner-->
+        <!--/sidebar-menu-->
+        <div class="sidebar-menu">
+            <header class="logo">
+                <a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a> <a href="#">
+                    <span id="logo"> <h1>Devi Auto Garage</h1></span>
+                    <!--<img id="logo" src="" alt="Logo"/>-->
+                </a>
+            </header>
+            <div style="border-top:1px solid rgba(69, 74, 84, 0.7)"></div>
+            <!--/down-->
+            <div class="down">
+                <a href="#"><img src="../../images/admin.jpg"></a>
+                <a href="#"><span class=" name-caret">Jasmin Leo</span></a>
+                <ul>
+                    <li><a class="tooltips" href="#"><span>Profile</span><i class="lnr lnr-user"></i></a></li>
+                    <li><a class="tooltips" href="#"><span>Settings</span><i class="lnr lnr-cog"></i></a></li>
+                    <li>
+                        <a class="tooltips" href="/User/Logout">
+                            <span>Log out</span><i class="lnr lnr-power-switch"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--//down-->
+            <div class="menu">
+                <ul id="menu">
+                    <li><a href="#"><i class="fa fa-tachometer"></i> <span>Dashboard</span></a></li>
+                    <li id="liBike">
+                        <a href="#">
+                            <i class="fa fa-motorcycle" aria-hidden="true"></i> <span>Bike </span>
+                            <span class="fa fa-angle-right" style="float: right"></span>
+                        </a>
+                        <ul id="ulSubBike">
+                            <li id="liSubBikeBrand"><a href="@Url.Action("ViewBrand", "Brand")">View Bike Brands</a></li>
+                            <li id="liSubBikeName"><a href="@Url.Action("AddEdit", "Brand")">Add Brand</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <script>
+        var toggle = true;
+        $(".sidebar-icon").click(function () {
+            if (toggle) {
+                $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+                $("#menu span").css({ "position": "absolute" });
+            }
+            else {
+                $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+                setTimeout(function () {
+                    $("#menu span").css({ "position": "relative" });
+                }, 400);
+            }
+
+            toggle = !toggle;
+        });
+    </script>
+
+</body>
+</html>
